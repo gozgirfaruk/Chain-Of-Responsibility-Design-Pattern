@@ -4,10 +4,10 @@ namespace ChainOfRespProject.ChainOfResponsibility
 {
     public abstract class Employee
     {
-        protected Employee NewxtApprover;
+        protected Employee NextApprover;
         public void SetNextApprover(Employee superVisior)
         {
-            this.NewxtApprover = superVisior;
+            this.NextApprover = superVisior;
         }
 
         public abstract void ProcessRequest(CustomerProcessViewModel model);

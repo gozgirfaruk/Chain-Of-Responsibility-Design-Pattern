@@ -3,37 +3,36 @@ using ChainOfRespProject.Models;
 
 namespace ChainOfRespProject.ChainOfResponsibility
 {
-    public class Treasurer : Employee
+    public class AreaDirector : Employee
     {
         private readonly Context _context;
 
-        public Treasurer(Context context)
+        public AreaDirector(Context context)
         {
             _context = context;
         }
 
         public override void ProcessRequest(CustomerProcessViewModel model)
         {
-            if (model.Amount <= 80000)
+            if (model.Amount <= 350000)
             {
                 CustomerProcess customerProcess = new CustomerProcess();
                 customerProcess.Amount = model.Amount;
                 customerProcess.Name = model.Name;
-                customerProcess.EmployeeName = "Veznedar";
-                customerProcess.Description = "İstenen tutar müşteriye veznedar tarafından ödendi";
+                customerProcess.EmployeeName = "Bölge Yöneticisi";
+                customerProcess.Description = "İstenen tutar müşteriye bölge yöneticisi tarafından ödendi";
                 _context.CustomerProcesses.Add(customerProcess);
                 _context.SaveChanges();
             }
-            else if(NextApprover != null)
+            else 
             {
                 CustomerProcess customerProcess = new CustomerProcess();
-                customerProcess.Amount=model.Amount;
+                customerProcess.Amount = model.Amount;
                 customerProcess.Name = model.Name;
-                customerProcess.EmployeeName = "Veznedar";
-                customerProcess.Description = "Ödeme Veznedar tarafından yapılamadı. İşlem şube müdür yardımcısına gönderildi.";
-                _context.CustomerProcesses.Add(customerProcess) ;
+                customerProcess.EmployeeName = "Bölge Müdürü";
+                customerProcess.Description = "Günlük ödeme limiti aşıldığı için ödeme yapılamadı. Müşteriye bilgi verildi.";
                 _context.SaveChanges();
-                NextApprover.ProcessRequest(model);
+             
             }
         }
     }
